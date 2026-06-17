@@ -311,7 +311,7 @@
             <h1>بحبك منونتى 🌚♥️</h1>
         </div>
 
-        <form id="loginForm" action="#" method="post">
+        <form id="loginForm" onsubmit="return false;">
             
             <div class="form-group">
                 <div class="input-wrapper">
@@ -371,38 +371,50 @@
         });
 
         // التحقق من كلمة المرور عند الضغط على زر الدخول
-loginForm.addEventListener('submit', function(e) {
-    e.preventDefault(); // منع إرسال النموذج
-    
-    const enteredPassword = passwordInput.value.trim();
-    
-    // إخفاء الرسائل السابقة
-    errorMessage.classList.remove('show');
-    successMessage.classList.remove('show');
-    passwordInput.classList.remove('error', 'success');
-    
-    // التحقق من كلمة المرور
-    if (enteredPassword === '') {
-        // لو فاضي
-        errorMessage.textContent = '❌ من فضلك أدخل كلمة المرور';
-        errorMessage.classList.add('show');
-        passwordInput.classList.add('error');
-    } else if (enteredPassword === CORRECT_PASSWORD) {
-        // ✅ لو كلمة السر صحيحة → حول للصفحة الرئيسية
-        window.location.href = 'home.html';
-    } else {
-        // لو كلمة السر غلط
-        errorMessage.textContent = '😂😂❤️ ضحكت عليك يمعلم - الباسورد الصح هو اليوم اللي عرفنا بعض فيه ❤️';
-        errorMessage.classList.add('show');
-        passwordInput.classList.add('error');
-        
-        // رج العظمة (shake) وبعدين شيل الكلاس
-        setTimeout(() => {
-            passwordInput.classList.remove('error');
-        }, 500);
-        
-        // مسح الحقل عشان يعيد المحاولة
-        passwordInput.value = '';
-        passwordInput.focus();
-    }
-});
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // منع إرسال النموذج
+            
+            const enteredPassword = passwordInput.value.trim();
+            
+            // إخفاء الرسائل السابقة
+            errorMessage.classList.remove('show');
+            successMessage.classList.remove('show');
+            passwordInput.classList.remove('error', 'success');
+            
+            // التحقق من كلمة المرور
+            if (enteredPassword === '') {
+                // لو فاضي
+                errorMessage.textContent = '❌ من فضلك أدخل كلمة المرور';
+                errorMessage.classList.add('show');
+                passwordInput.classList.add('error');
+            } else if (enteredPassword === CORRECT_PASSWORD) {
+                // ✅ لو كلمة السر صحيحة → حول للصفحة الرئيسية
+                window.location.href = 'home.html';
+            } else {
+                // لو كلمة السر غلط
+                errorMessage.textContent = '😂😂❤️ ضحكت عليك يمعلم - الباسورد الصح هو اليوم اللي عرفنا بعض فيه ❤️';
+                errorMessage.classList.add('show');
+                passwordInput.classList.add('error');
+                
+                // رج العظمة (shake) وبعدين شيل الكلاس
+                setTimeout(() => {
+                    passwordInput.classList.remove('error');
+                }, 500);
+                
+                // مسح الحقل عشان يعيد المحاولة
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
+
+        // إخفاء رسالة الخطأ لما المستخدم يبدأ يكتب
+        passwordInput.addEventListener('input', function() {
+            if (errorMessage.classList.contains('show')) {
+                errorMessage.classList.remove('show');
+                passwordInput.classList.remove('error');
+            }
+        });
+    </script>
+
+</body>
+</html>
